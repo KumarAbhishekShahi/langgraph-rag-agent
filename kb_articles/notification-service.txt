@@ -1,0 +1,48 @@
+NOTIFICATION SERVICE — INTEGRATION GUIDE
+=========================================
+
+The Notification Service handles email, SMS, and push notifications
+for all enterprise applications.
+
+SUPPORTED CHANNELS
+------------------
+- Email    : AWS SES / SendGrid
+- SMS      : Twilio / Kaleyra (India)
+- Push     : Firebase Cloud Messaging (FCM)
+- In-App   : WebSocket + Redis pub/sub
+- Webhook  : Outbound HTTP POST to registered endpoints
+
+SENDING A NOTIFICATION (REST API)
+----------------------------------
+POST /api/v1/notifications
+{
+  "channel": "email",
+  "recipient": "user@example.com",
+  "templateId": "WELCOME_EMAIL",
+  "variables": {
+    "firstName": "Ravi",
+    "activationLink": "https://app.example.com/activate/token123"
+  },
+  "priority": "HIGH"
+}
+
+TEMPLATE IDs
+-------------
+WELCOME_EMAIL         — New user registration
+PASSWORD_RESET        — Password reset link
+ORDER_CONFIRMATION    — Order placed successfully
+PAYMENT_FAILED        — Payment failure alert
+ACCOUNT_LOCKED        — Security alert for locked accounts
+
+RETRY POLICY
+------------
+- Email: 3 retries with exponential backoff (1min, 5min, 30min)
+- SMS:   2 retries (1min, 10min)
+- Push:  1 retry (30 seconds)
+- Dead-letter queue after all retries exhausted
+
+RATE LIMITS
+-----------
+- Marketing emails: max 1 per user per 24 hours
+- Transactional:    no rate limit
+- SMS:              max 5 per user per hour

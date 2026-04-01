@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head><title>REST API Design Standards</title></head>
+<body>
+<h1>REST API Design Standards</h1>
+
+<h2>URL Conventions</h2>
+<ul>
+  <li>Use nouns not verbs: <code>/api/v1/orders</code> not <code>/api/v1/getOrders</code></li>
+  <li>Plural resource names: <code>/users</code>, <code>/products</code></li>
+  <li>Lowercase hyphen-separated: <code>/order-items</code></li>
+  <li>Version in URL: <code>/api/v1/</code></li>
+</ul>
+
+<h2>HTTP Methods</h2>
+<table border="1">
+  <tr><th>Method</th><th>Use</th><th>Idempotent</th></tr>
+  <tr><td>GET</td><td>Read resource</td><td>Yes</td></tr>
+  <tr><td>POST</td><td>Create resource</td><td>No</td></tr>
+  <tr><td>PUT</td><td>Full update</td><td>Yes</td></tr>
+  <tr><td>PATCH</td><td>Partial update</td><td>No</td></tr>
+  <tr><td>DELETE</td><td>Remove resource</td><td>Yes</td></tr>
+</table>
+
+<h2>Standard Response Structure</h2>
+<pre><code>{
+  "success": true,
+  "data": { },
+  "message": "Order created successfully",
+  "timestamp": "2026-03-31T10:15:00Z",
+  "requestId": "req-abc-123"
+}</code></pre>
+
+<h2>Error Response</h2>
+<pre><code>{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Email is required",
+    "field": "email"
+  }
+}</code></pre>
+
+<h2>Pagination</h2>
+<p>All list endpoints must support cursor-based pagination:</p>
+<pre><code>GET /api/v1/orders?page=2&amp;size=20&amp;sort=createdAt,desc</code></pre>
+
+<h2>Rate Limiting</h2>
+<ul>
+  <li>Default: 100 requests/minute per API key</li>
+  <li>Burst: 200 requests/minute for authenticated users</li>
+  <li>Return 429 Too Many Requests with Retry-After header</li>
+</ul>
+</body>
+</html>

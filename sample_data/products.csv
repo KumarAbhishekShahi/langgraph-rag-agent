@@ -1,0 +1,11 @@
+product_id,product_name,category,price_usd,stock_count,supplier,lead_time_days,active
+P001,Enterprise SSO Module,Authentication,4999.00,999,AuthCorp,5,true
+P002,Payment Gateway SDK,Payments,1999.00,999,PayTech,3,true
+P003,Notification Engine,Messaging,999.00,999,MsgWorks,2,true
+P004,Analytics Dashboard,Reporting,2499.00,500,DataViz Inc,7,true
+P005,Audit Log Service,Security,1499.00,999,SecureLog,4,true
+P006,Document Storage API,Storage,799.00,999,CloudStore,2,true
+P007,Email Template Builder,Messaging,499.00,999,MailCraft,1,true
+P008,Workflow Automation,BPM,3499.00,200,FlowWorks,10,true
+P009,API Gateway Pro,Infrastructure,5999.00,100,NetEdge,14,false
+P010,Data Pipeline Service,ETL,2999.00,300,PipeData,7,true
